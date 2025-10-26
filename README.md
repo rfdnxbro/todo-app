@@ -15,9 +15,12 @@
 .
 ├── app/                    # Next.js App Router
 │   ├── layout.tsx         # ルートレイアウト
-│   ├── page.tsx           # メインページ
+│   ├── page.tsx           # メインページ（テスト用UI含む）
 │   └── globals.css        # グローバルスタイル
 ├── components/            # Reactコンポーネント
+├── hooks/                 # カスタムフック
+│   ├── useTasks.ts       # タスク管理フック（CRUD操作）
+│   └── index.ts          # フックのエクスポート
 ├── types/                 # TypeScript型定義
 │   ├── task.ts           # タスク関連の型
 │   └── index.ts          # 型のエクスポート
@@ -53,18 +56,42 @@
 
 ## 開発フェーズ
 
-### Phase 1: 基本機能 (完了)
+### Phase 1: データ構造とlocalStorage実装 ✅ (完了)
 - ✅ Next.jsプロジェクトのセットアップ
 - ✅ 基本的なプロジェクト構造の構築
-- ✅ TypeScript型定義の作成
-- ✅ localStorage操作ユーティリティの実装
+- ✅ TypeScript型定義の作成（`types/task.ts`）
+  - Task interface
+  - CreateTaskInput, UpdateTaskInput 型
+- ✅ localStorage操作ユーティリティの実装（`lib/storage.ts`）
+  - loadTasks: localStorageからタスクを読み込み
+  - saveTasks: localStorageにタスクを保存
+  - clearTasks: localStorageをクリア
+- ✅ タスク管理カスタムフック（`hooks/useTasks.ts`）
+  - createTask: タスクの作成
+  - updateTask: タスクの更新
+  - deleteTask: タスクの削除
+  - toggleTaskComplete: 完了状態の切り替え
+  - clearAllTasks: 全タスクのクリア
+  - getTaskById: IDでタスクを取得
+  - 自動保存・自動読み込み機能
+- ✅ ユーティリティ関数（`lib/utils.ts`）
+  - generateId: UUID生成
+  - getCurrentTimestamp: ISO 8601形式のタイムスタンプ取得
+  - formatDate: 日付フォーマット
+  - getPriorityLabel, getPriorityColor: 優先度表示用
+- ✅ テスト用UIの実装（`app/page.tsx`）
+  - タスク一覧表示
+  - サンプルタスク作成機能
+  - タスクの完了/削除機能
 
-### Phase 2: CRUD機能 (予定)
-- タスクのCRUD機能実装
-- UIコンポーネントの作成
-- フォーム処理
+### Phase 2: CRUD機能とUI (予定)
+- タスク作成フォームの実装
+- タスク編集モーダルの作成
+- タスク削除の確認ダイアログ
+- UIコンポーネントの分離とリファクタリング
 
 ### Phase 3: 拡張機能 (予定)
 - フィルタリング・ソート機能
-- 優先度・期限日・タグ機能
+- タグによる絞り込み
 - レスポンシブデザイン対応
+- データのエクスポート/インポート機能
